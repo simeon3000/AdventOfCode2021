@@ -1,21 +1,19 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 
 namespace AdventOfCode2021
 {
-    public class Day2
+    public class Day02 : IDay
     {
-        private const string file = @"c:\temp\day2.txt";
-        public static void Run1()
+        private const string file = @"inputs\day02.txt";
+
+        public long Run1()
         {
-            int distance = 0;
-            int depth = 0;
+            int distance = 0,
+                depth = 0;
 
             foreach (string line in File.ReadLines(file))
-            {
-                string[] tokens = line.Split();
-                string command = tokens[0];
-                int value = int.Parse(tokens[1]);
+            {                
+                GetCommandAndValue(line, out string command, out int value);
 
                 switch (command)
                 {
@@ -34,20 +32,18 @@ namespace AdventOfCode2021
             }
 
             long result = distance * depth;
-            Console.WriteLine($"Day 2 Run1 -> Result: {result}");
-        }
+            return result;
+        }        
 
-        public static void Run2()
+        public long Run2()
         {
-            int distance = 0;
-            int depth = 0;
-            int aim = 0;
+            int distance = 0,
+                depth = 0,
+                aim = 0;
 
             foreach (string line in File.ReadLines(file))
             {
-                string[] tokens = line.Split();
-                string command = tokens[0];
-                int value = int.Parse(tokens[1]);
+                GetCommandAndValue(line, out string command, out int value);
 
                 switch (command)
                 {
@@ -67,7 +63,14 @@ namespace AdventOfCode2021
             }
 
             long result = distance * depth;
-            Console.WriteLine($"Day 2 Run2 -> Result: {result}");
+            return result;
+        }
+
+        private static void GetCommandAndValue(string line, out string command, out int value)
+        {
+            string[] tokens = line.Split();
+            command = tokens[0];
+            value = int.Parse(tokens[1]);
         }
     }
 }
