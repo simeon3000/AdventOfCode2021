@@ -1,32 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AdventOfCode2021
 {
-    public class Day6
+    public class Day06 : IDay
     {
-        private const string file = @"c:\temp\day6.txt";
-        private const int days1 = 80;
-        private const int days2 = 256;
+        private const string file = @"inputs\day06.txt";
+        private const int run1Days = 80;
+        private const int run2Days = 256;
 
-        private static readonly List<string> input;
+        private static readonly List<string> input = Helper.GetInputLines(file);
 
-        static Day6()
+        public long Run1()
         {
-            input = Helper.GetInputLines(file);            
-        }
+            List<int> fishes = GetFishes();
 
-        public static void Run1()
-        {
-            List<int> fishes = input.First().Split(',').Select(x => int.Parse(x)).ToList();
-
-            for (int i = 1; i <= days1; i++)
+            for (int i = 1; i <= run1Days; i++)
             {
-                var newFishes = new List<int>();
-                
+                List<int> newFishes = new();
+
                 for (int j = 0; j < fishes.Count; j++)
                 {
                     if (fishes[j] == 0)
@@ -43,12 +35,12 @@ namespace AdventOfCode2021
                 fishes.AddRange(newFishes);
             }
 
-            Console.WriteLine($"Day 6 Run1 -> Result: {fishes.Count}");
+            return fishes.Count();
         }
 
-        public static void Run2()
+        public long Run2()
         {
-            List<int> fishes = input.First().Split(',').Select(x => int.Parse(x)).ToList();
+            List<int> fishes = GetFishes();
             var fishCount = new Dictionary<int, long>
                 {
                     {0, 0},
@@ -64,7 +56,7 @@ namespace AdventOfCode2021
 
             fishes.GroupBy(x => x).ToList().ForEach(x => fishCount[x.Key] = x.Count());
 
-            for (var i = 0; i < days2; i++)
+            for (var i = 0; i < run2Days; i++)
             {
                 long? tempVal = null;
                 foreach (var key in fishCount.Keys.OrderByDescending(x => x))
@@ -86,8 +78,9 @@ namespace AdventOfCode2021
             }
 
             long result = fishCount.Values.Sum();
-
-            Console.WriteLine($"Day 6 Run2 -> Result: {result}");
+            return result;
         }
+
+        private List<int> GetFishes() => input.First().Split(',').Select(x => int.Parse(x)).ToList();
     }
 }

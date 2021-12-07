@@ -4,17 +4,12 @@ using System.Linq;
 
 namespace AdventOfCode2021
 {
-    public class Day3
+    public class Day03 : IDay
     {
-        private const string file = @"c:\temp\day3.txt";
-        private static readonly List<string> input;
+        private const string file = @"inputs\day03.txt";
+        private readonly List<string> input = Helper.GetInputLines(file);
 
-        static Day3()
-        {
-            input = Helper.GetInputLines(file);
-        }
-
-        public static void Run1()
+        public long Run1()
         {
             int[] counters = new int[input[0].Length];
 
@@ -48,19 +43,19 @@ namespace AdventOfCode2021
             int epsilon = Convert.ToInt32(epsilonRate, 2);
 
             long result = gamma * epsilon;
-            Console.WriteLine($"Day 3 Run1 -> Result: {result}");
+            return result;
         }
 
-        public static void Run2()
-        {           
+        public long Run2()
+        {
             int oxigen = Convert.ToInt32(GetValueByLeadingChar('1'), 2);
             int co2 = Convert.ToInt32(GetValueByLeadingChar('0'), 2);
 
             long result = oxigen * co2;
-            Console.WriteLine($"Day 3 Run2 -> Result: {result}");
+            return result;
         }
 
-        private static string GetValueByLeadingChar(char leadingChar)
+        private string GetValueByLeadingChar(char leadingChar)
         {
             char lead = leadingChar == '1' ? '1' : '0';
             char second = leadingChar == '1' ? '0' : '1';

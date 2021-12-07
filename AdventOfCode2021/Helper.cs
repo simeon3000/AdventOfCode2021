@@ -7,7 +7,7 @@ namespace AdventOfCode2021
     {
         public static List<string> GetInputLines(string file)
         {
-            var input = new List<string>();
+            List<string> input = new();
             foreach (string line in File.ReadLines(file))
             {
                 input.Add(line);

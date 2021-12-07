@@ -1,12 +1,13 @@
-﻿using System;
+﻿using org.mariuszgromada.math.mxparser;
+using System;
 
 namespace AdventOfCode2021
 {
     class Program
     {
         static void Main(string[] args)
-        {
-            IDay day = new Day02();
+        {            
+            IDay day = new Day07();
 
             Helper.PrintResult(day, "Run1", day.Run1());
             Helper.PrintResult(day, "Run2", day.Run2());

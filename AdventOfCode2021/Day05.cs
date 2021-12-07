@@ -5,27 +5,21 @@ using System.Text.RegularExpressions;
 
 namespace AdventOfCode2021
 {
-    public class Day5
+    public class Day05 : IDay
     {
-        private const string file = @"c:\temp\day5.txt";
+        private const string file = @"inputs\day05.txt";
         private const int size = 1000;
 
-        private static readonly List<string> input;
         private const string pattern = @"(\d+),(\d+) -> (\d+),(\d+)";
-        private static readonly List<LineCoordinates> coordinates;
 
-        static Day5()
-        {
-            input = Helper.GetInputLines(file);
-            coordinates = GetCoordinates();
-        }
+        private static readonly List<string> input = Helper.GetInputLines(file);
+        private static readonly List<LineCoordinates> coordinates = GetCoordinates();        
 
-        public static void Run1()
+        public long Run1()
         {           
             int[,] board = new int[size, size];
             foreach (LineCoordinates c in coordinates)
-            {
-                
+            {                
                 if (c.IsHorizontalLine)
                 {
                     FillHorizontal(board, c);
@@ -36,10 +30,10 @@ namespace AdventOfCode2021
                 }
             }
 
-            Console.WriteLine($"Day 5 Run1 -> Result: {CalcResult(board)}");
+            return CalcResult(board);
         }
 
-        public static void Run2()
+        public long Run2()
         {            
             int[,] board = new int[size, size];
             foreach (LineCoordinates c in coordinates)
@@ -59,10 +53,10 @@ namespace AdventOfCode2021
                 }
             }
 
-            Console.WriteLine($"Day 5 Run2 -> Result: {CalcResult(board)}");            
+            return CalcResult(board);
         }
 
-        private static void FillDiagonal(int[,] board, LineCoordinates c)
+        private void FillDiagonal(int[,] board, LineCoordinates c)
         {
             int distance = Math.Abs(c.X1 - c.X2);
             int horizontalSign = c.X1 < c.X2 ? 1 : -1;
@@ -74,7 +68,7 @@ namespace AdventOfCode2021
             }            
         }
 
-        private static void FillVertical(int[,] board, LineCoordinates c)
+        private void FillVertical(int[,] board, LineCoordinates c)
         {
             int startPointY = Math.Min(c.Y1, c.Y2);
             int distance = Math.Abs(c.Y1 - c.Y2);
@@ -85,7 +79,7 @@ namespace AdventOfCode2021
             }
         }
 
-        private static void FillHorizontal(int[,] board, LineCoordinates c)
+        private void FillHorizontal(int[,] board, LineCoordinates c)
         {
             int startPointX = Math.Min(c.X1, c.X2);
             int distance = Math.Abs(c.X1 - c.X2);
@@ -94,27 +88,9 @@ namespace AdventOfCode2021
             {
                 board[i, c.Y1]++;
             }
-        }
+        }        
 
-        private static List<LineCoordinates> GetCoordinates()
-        {
-            var coordinates = new List<LineCoordinates>();
-            foreach (string line in input)
-            {
-                Match match = Regex.Matches(line, pattern).First();
-                int x1 = int.Parse(match.Groups[1].ToString());
-                int y1 = int.Parse(match.Groups[2].ToString());
-                int x2 = int.Parse(match.Groups[3].ToString());
-                int y2 = int.Parse(match.Groups[4].ToString());
-                
-                LineCoordinates currentLine = new LineCoordinates(x1, y1, x2, y2);
-                coordinates.Add(currentLine);
-            }
-
-            return coordinates;
-        }
-
-        private static int CalcResult(int[,] board)
+        private int CalcResult(int[,] board)
         {
             int result = 0;
             for (int i = 0; i < size; i++)
@@ -129,6 +105,24 @@ namespace AdventOfCode2021
             }
 
             return result;            
+        }
+
+        private static List<LineCoordinates> GetCoordinates()
+        {
+            List<LineCoordinates> coordinates = new();
+            foreach (string line in input)
+            {
+                Match match = Regex.Matches(line, pattern).First();
+                int x1 = int.Parse(match.Groups[1].ToString());
+                int y1 = int.Parse(match.Groups[2].ToString());
+                int x2 = int.Parse(match.Groups[3].ToString());
+                int y2 = int.Parse(match.Groups[4].ToString());
+
+                LineCoordinates currentLine = new (x1, y1, x2, y2);
+                coordinates.Add(currentLine);
+            }
+
+            return coordinates;
         }
 
         private class LineCoordinates
