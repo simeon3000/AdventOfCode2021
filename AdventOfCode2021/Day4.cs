@@ -11,7 +11,7 @@ namespace AdventOfCode2021
 
         static Day4()
         {
-            input = Helper.GetInput(file);
+            input = Helper.GetInputLines(file);
         }
 
         private static void ReadInput(List<string> input, out List<BoardNumber[,]> playersBoards, out List<int> bingoNumbers)

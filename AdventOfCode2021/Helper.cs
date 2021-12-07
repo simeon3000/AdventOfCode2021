@@ -5,7 +5,7 @@ namespace AdventOfCode2021
 {
     public class Helper
     {
-        public static List<string> GetInput(string file)
+        public static List<string> GetInputLines(string file)
         {
             var input = new List<string>();
             foreach (string line in File.ReadLines(file))
@@ -14,6 +14,11 @@ namespace AdventOfCode2021
             }
 
             return input;
+        }
+
+        public static void PrintResult(IDay day, string run, long result)
+        {
+            System.Console.WriteLine($"{day.GetType().Name} {run} -> Result: {result}");
         }
     }
 }

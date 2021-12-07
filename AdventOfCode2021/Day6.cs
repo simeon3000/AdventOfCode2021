@@ -16,7 +16,7 @@ namespace AdventOfCode2021
 
         static Day6()
         {
-            input = Helper.GetInput(file);            
+            input = Helper.GetInputLines(file);            
         }
 
         public static void Run1()

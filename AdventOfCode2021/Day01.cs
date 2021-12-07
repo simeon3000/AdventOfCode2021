@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
 namespace AdventOfCode2021
 {
-    public class Day1
+    public class Day01 : IDay
     {
-        private const string file = @"c:\temp\day1.txt";
-        public static void Run1()
+        private const string file = @"inputs\day01.txt";
+
+        public long Run1()
         {
             int prev = int.MaxValue;
             int counter = 0;
@@ -25,10 +25,10 @@ namespace AdventOfCode2021
                 prev = current;
             }
 
-            Console.WriteLine($"Day 1 Run1 -> Counter: {counter}");
+            return counter;
         }
 
-        public static void Run2()
+        public long Run2()
         {
             var values = new List<int>();            
             foreach (string line in File.ReadLines(file))
@@ -51,7 +51,7 @@ namespace AdventOfCode2021
                 prevSum = sum;
             }
 
-            Console.WriteLine($"Day 1 Run2 -> Counter: {counter}");
+            return counter;
         }
     }
 }

@@ -16,7 +16,7 @@ namespace AdventOfCode2021
 
         static Day5()
         {
-            input = Helper.GetInput(file);
+            input = Helper.GetInputLines(file);
             coordinates = GetCoordinates();
         }
 
