@@ -8,29 +8,21 @@ namespace AdventOfCode2021
     {
         private const string file = @"inputs\day07.txt";        
         private static readonly List<string> input = Helper.GetInputLines(file);
+
         private static readonly int[] crabs = input.First().Split(',').Select(x => int.Parse(x)).OrderBy(x => x).ToArray();
         private readonly int maxElement = crabs.Max();
 
-        public long Run1()
-        {                        
-            long minFuel = int.MaxValue;
+        private static int Run1CalcLogic(int x) => x;
+        private static int Run2CalcLogic(int x) => (x + 1) * x / 2;
 
-            for (int i = 0; i <= maxElement; i++)
-            {
-                int fuel = 0;
-                foreach (int pos in crabs)
-                {
-                    fuel += Math.Abs(pos - i);
-                }
 
-                minFuel = Math.Min(minFuel, fuel);
-            }
+        public long Run1() => Calc(Run1CalcLogic);
+                 
+        public long Run2() => Calc(Run2CalcLogic);
 
-            return minFuel;
-        }
 
-        public long Run2()
-        {            
+        private long Calc(Func<int, int> calcFunc)
+        {
             long minFuel = int.MaxValue;
 
             for (int i = 0; i <= maxElement; i++)
@@ -39,13 +31,13 @@ namespace AdventOfCode2021
                 foreach (int pos in crabs)
                 {
                     int distance = Math.Abs(pos - i);
-                    fuel += (distance + 1) * distance / 2; 
+                    fuel += calcFunc(distance);
                 }
-                
-                minFuel = Math.Min(minFuel, fuel);                
+
+                minFuel = Math.Min(minFuel, fuel);
             }
 
             return minFuel;
-        }        
+        }
     }
 }

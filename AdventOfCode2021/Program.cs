@@ -1,5 +1,4 @@
-﻿using org.mariuszgromada.math.mxparser;
-using System;
+﻿using System;
 
 namespace AdventOfCode2021
 {
