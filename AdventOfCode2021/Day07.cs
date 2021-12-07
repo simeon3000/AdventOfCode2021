@@ -10,18 +10,15 @@ namespace AdventOfCode2021
         private static readonly List<string> input = Helper.GetInputLines(file);
 
         private static readonly int[] crabs = input.First().Split(',').Select(x => int.Parse(x)).OrderBy(x => x).ToArray();
-        private readonly int maxElement = crabs.Max();
+        private readonly int maxElement = crabs.Max();        
+
+        public long Run1() => Calculate(Run1CalcLogic);                 
+        public long Run2() => Calculate(Run2CalcLogic);
 
         private static int Run1CalcLogic(int x) => x;
         private static int Run2CalcLogic(int x) => (x + 1) * x / 2;
 
-
-        public long Run1() => Calc(Run1CalcLogic);
-                 
-        public long Run2() => Calc(Run2CalcLogic);
-
-
-        private long Calc(Func<int, int> calcFunc)
+        private long Calculate(Func<int, int> calcLogic)
         {
             long minFuel = int.MaxValue;
 
@@ -31,7 +28,7 @@ namespace AdventOfCode2021
                 foreach (int pos in crabs)
                 {
                     int distance = Math.Abs(pos - i);
-                    fuel += calcFunc(distance);
+                    fuel += calcLogic(distance);
                 }
 
                 minFuel = Math.Min(minFuel, fuel);
