@@ -61,7 +61,7 @@ namespace AdventOfCode2021
             res++;
             matrix[i, j].IsMarked = true;
 
-            GetNeighbors(i, j, out Element m, out Element mUp, out Element mLeft, out Element mRight, out Element mDown);
+            GetNeighbors(i, j, out _, out Element mUp, out Element mLeft, out Element mRight, out Element mDown);
 
             if (IsBasinElement(mUp))
             {
