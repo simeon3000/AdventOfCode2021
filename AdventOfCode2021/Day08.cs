@@ -137,7 +137,7 @@ namespace AdventOfCode2021
                 digitPositions.Add(lettersPositions[c]);
             }
 
-            foreach (var number in numbersPositions)
+            foreach (KeyValuePair<string, List<int>> number in numbersPositions)
             {
                 if (Enumerable.SequenceEqual(digitPositions.OrderBy(x => x), number.Value))
                 {
