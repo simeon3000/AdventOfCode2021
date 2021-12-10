@@ -36,18 +36,17 @@ namespace AdventOfCode2021
                             break;
                         }
 
-                        bool isCorrect = false;
+                        bool isCorrectClosingBracket = false;
                         for (int i = 0; i < closingBrackets.Length; i++)
                         {
-
                             if (c == closingBrackets[i] && stackChar == openingBrackets[i])
                             {
-                                isCorrect = true;
+                                isCorrectClosingBracket = true;
                                 break;
                             }
                         }
 
-                        if (isCorrect)
+                        if (isCorrectClosingBracket)
                         {
                             _ = stack.Pop();
                         }
@@ -68,12 +67,12 @@ namespace AdventOfCode2021
             Dictionary<char, int> bracketsValues = new()
                 { [')'] = 1, [']'] = 2, ['}'] = 3, ['>'] = 4 };
 
-            List<long> scores = new();
+            List<long> lineScores = new();
 
             foreach (string line in input)
             {
                 Stack<char> stack = new();
-                bool isBroken = false;                
+                bool isBrokenLine = false;                
 
                 foreach (char c in line)
                 {
@@ -85,34 +84,33 @@ namespace AdventOfCode2021
                     {
                         if (!stack.TryPeek(out char stackChar))
                         {                            
-                            isBroken = true;
+                            isBrokenLine = true;
                             break;
                         }
 
-                        bool isCorrect = false;
+                        bool isCorrectClosingBracket = false;
                         for (int i = 0; i < closingBrackets.Length; i++)
                         {
-
                             if (c == closingBrackets[i] && stackChar == openingBrackets[i])
                             {
-                                isCorrect = true;
+                                isCorrectClosingBracket = true;
                                 break;
                             }
                         }
 
-                        if (isCorrect)
+                        if (isCorrectClosingBracket)
                         {
                             _ = stack.Pop();
                         }
                         else
                         {                            
-                            isBroken = true;
+                            isBrokenLine = true;
                             break;
                         }
                     }
                 }
 
-                if (stack.Count > 0 && !isBroken)
+                if (stack.Count > 0 && !isBrokenLine)
                 {
                     long currentScore = 0;
                     while (stack.Count > 0)
@@ -128,12 +126,12 @@ namespace AdventOfCode2021
                         }                        
                     }
 
-                    scores.Add(currentScore);
+                    lineScores.Add(currentScore);
                 }
             }
 
-            int resultIndex = scores.Count / 2;
-            List<long> ordered = scores.OrderBy(x => x).ToList();
+            int resultIndex = lineScores.Count / 2;
+            List<long> ordered = lineScores.OrderBy(x => x).ToList();
             long result = ordered[resultIndex];
 
             return result;
