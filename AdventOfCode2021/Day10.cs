@@ -43,6 +43,7 @@ namespace AdventOfCode2021
                             if (c == closingBrackets[i] && stackChar == openingBrackets[i])
                             {
                                 isCorrect = true;
+                                break;
                             }
                         }
 
@@ -55,7 +56,6 @@ namespace AdventOfCode2021
                             result += bracketsValues[c];
                             break;
                         }
-
                     }
                 }
             }
@@ -65,7 +65,78 @@ namespace AdventOfCode2021
 
         public long Run2()
         {
-            throw new NotImplementedException();
+            Dictionary<char, int> bracketsValues = new()
+                { [')'] = 1, [']'] = 2, ['}'] = 3, ['>'] = 4 };
+
+            List<long> scores = new();
+
+            foreach (string line in input)
+            {
+                Stack<char> stack = new();
+                bool isBroken = false;                
+
+                foreach (char c in line)
+                {
+                    if (openingBrackets.Contains(c))
+                    {
+                        stack.Push(c);
+                    }
+                    else if (closingBrackets.Contains(c))
+                    {
+                        if (!stack.TryPeek(out char stackChar))
+                        {                            
+                            isBroken = true;
+                            break;
+                        }
+
+                        bool isCorrect = false;
+                        for (int i = 0; i < closingBrackets.Length; i++)
+                        {
+
+                            if (c == closingBrackets[i] && stackChar == openingBrackets[i])
+                            {
+                                isCorrect = true;
+                                break;
+                            }
+                        }
+
+                        if (isCorrect)
+                        {
+                            _ = stack.Pop();
+                        }
+                        else
+                        {                            
+                            isBroken = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (stack.Count > 0 && !isBroken)
+                {
+                    long currentScore = 0;
+                    while (stack.Count > 0)
+                    {
+                        char current = stack.Pop();                        
+                        for (int i = 0; i < openingBrackets.Length; i++)
+                        {
+                            if (current == openingBrackets[i])
+                            {
+                                currentScore = currentScore * 5 + bracketsValues[closingBrackets[i]];
+                                break;
+                            }
+                        }                        
+                    }
+
+                    scores.Add(currentScore);
+                }
+            }
+
+            int resultIndex = scores.Count / 2;
+            List<long> ordered = scores.OrderBy(x => x).ToList();
+            long result = ordered[resultIndex];
+
+            return result;
         }
     }
 }
