@@ -24,7 +24,7 @@ public class Day1 : IDay
             currentSum += int.Parse(item);
         }
 
-        return maxSum;
+        return maxSum > currentSum ? maxSum : currentSum;
     }
 
     public long Run2()
@@ -32,10 +32,10 @@ public class Day1 : IDay
         List<int> elves = new();
         int currentSum = 0;
         foreach (string item in input)
-        {            
+        {
             if (!string.IsNullOrEmpty(item))
             {
-                currentSum += int.Parse(item);                                               
+                currentSum += int.Parse(item);
                 continue;
             }
 
