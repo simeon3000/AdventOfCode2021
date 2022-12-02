@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using Shared;
 
 namespace AdventOfCode2021
 {

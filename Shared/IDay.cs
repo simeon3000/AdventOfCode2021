@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode2021
+﻿namespace Shared
 {
     public interface IDay
     {

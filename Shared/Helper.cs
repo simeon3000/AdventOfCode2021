@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 
-namespace AdventOfCode2021
+namespace Shared
 {
     public class Helper
     {
