@@ -1,6 +1,6 @@
 ﻿namespace AdventOfCode2022;
 
-public class Day1 : IDay
+public class Day01 : IDay
 {
     private const string file = @"inputs\day01.txt";
     private static readonly List<string> input = Helper.GetInputLines(file);
