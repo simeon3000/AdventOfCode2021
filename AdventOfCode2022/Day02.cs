@@ -41,7 +41,7 @@ public class Day02 : IDay
         return GetSum(scores);
     }
 
-    private int GetSum(Dictionary<string, int> scores)
+    private static int GetSum(Dictionary<string, int> scores)
     {
         int sum = 0;
         input.ForEach(x => sum += scores[x]);
