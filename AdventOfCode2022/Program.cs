@@ -2,7 +2,7 @@
 
 using AdventOfCode2022;
 
-IDay day = new Day06();
+IDay day = new Day07();
 
 Helper.PrintResult(day, "Run1", day.Run1());
 Helper.PrintResult(day, "Run2", day.Run2());
