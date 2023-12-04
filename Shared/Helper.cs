@@ -1,24 +1,19 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 
-namespace Shared
+namespace Shared;
+
+public class Helper
 {
-    public class Helper
+    public static List<string> GetInputLines(string file)
     {
-        public static List<string> GetInputLines(string file)
-        {
-            List<string> input = new();
-            foreach (string line in File.ReadLines(file))
-            {
-                input.Add(line);
-            }
+        List<string> input = [.. File.ReadLines(file)];
 
-            return input;
-        }
+        return input;
+    }
 
-        public static void PrintResult(IDay day, string run, long result)
-        {
-            System.Console.WriteLine($"{day.GetType().Name} {run} -> Result: {result}");
-        }
+    public static void PrintResult(IDay day, string run, long result)
+    {
+        System.Console.WriteLine($"{day.GetType().Name} {run} -> Result: {result}");
     }
 }

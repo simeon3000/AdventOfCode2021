@@ -1,8 +1,7 @@
-﻿namespace Shared
+﻿namespace Shared;
+
+public interface IDay
 {
-    public interface IDay
-    {
-        long Run1();
-        long Run2();
-    }
+    long Run1();
+    long Run2();
 }
