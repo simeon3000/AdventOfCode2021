@@ -92,8 +92,8 @@ public class Day07 : IDay
 }
 
 public record Dir
-{    
-    public Dir PreviousDir { get; init; }
+{
+    public Dir PreviousDir { get; init; } = null!;
     public int FilesSize { get; set; }
     public Dictionary<string, Dir> Dirs { get; } = new();
     public int Size => FilesSize + Dirs.Values.Sum(x => x.Size);
