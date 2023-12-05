@@ -45,8 +45,52 @@ public class Day03 : IDay
 
     public long Run2()
     {
+        long result = 0;
+        string number = "";
+        (int, int) endIndex = (0, 0);
+        Dictionary<(int, int), List<int>> gears = [];
 
-        return 2;
+        for (int i = 0; i < size; i++)
+        {
+            for (int j = 0; j < size; j++)
+            {
+                char c = matrix[i, j];
+                if (char.IsDigit(c))
+                {
+                    number += c;
+                    endIndex = (i, j);
+                    continue;
+                }
+
+                if (!string.IsNullOrEmpty(number))
+                {
+                    if (IsGearPart(endIndex, number.Length, out (int, int) asteriskIndex))
+                    {
+                        if (!gears.TryGetValue(asteriskIndex, out _))
+                        {
+                            gears.Add(asteriskIndex, []);
+                        }
+
+                        gears[asteriskIndex].Add(int.Parse(number));
+                    }
+
+                    number = "";
+                }
+            }
+        }
+
+        foreach (List<int> gearNumbers in gears.Values.Where(x => x.Count == 2))
+        {
+            long gearRatio = 1;
+            foreach (int num in gearNumbers)
+            {
+                gearRatio *= num;
+            }
+
+            result += gearRatio;
+        }
+
+        return result;
     }
 
     private void FillMatrix()
@@ -72,7 +116,7 @@ public class Day03 : IDay
                     int charCol = endIndex.Col - numberLength + j;
 
                     char c = matrix[charRow, charCol];
-                    if (CharIsSymbol(c))
+                    if (!char.IsDigit(c) && c != '.')
                     {
                         return true;
                     }
@@ -85,5 +129,30 @@ public class Day03 : IDay
         return false;
     }
 
-    private static bool CharIsSymbol(char c) => !char.IsDigit(c) && c != '.';
+    private bool IsGearPart((int Row, int Col) endIndex, int numberLength, out (int, int) asteriskIndex)
+    {
+        asteriskIndex = (0, 0);
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j <= numberLength + 1; j++)
+            {
+                try
+                {
+                    int charRow = endIndex.Row - 1 + i;
+                    int charCol = endIndex.Col - numberLength + j;
+
+                    char c = matrix[charRow, charCol];
+                    if (c == '*')
+                    {
+                        asteriskIndex = (charRow, charCol);
+                        return true;
+                    }
+                }
+                catch (IndexOutOfRangeException)
+                { }
+            }
+        }
+
+        return false;
+    }
 }
