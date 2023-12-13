@@ -28,40 +28,49 @@ public class Day05 : IDay
 
         FillMaps();
 
-        List<long> results = [];
+        long result = long.MaxValue;
         foreach (long seed in seeds)
         {
-            long result = seed;
-            foreach (SortedDictionary<long, (long Destination, long RangeLength)> map in maps)
+            long seedResult = GetSeedResult(seed);
+            if (seedResult < result)
             {
-                long temp = -1;
-                foreach (long source in map.Keys)
-                {
-                    if (source > result)
-                    {
-                        break;
-                    }
-
-                    temp = source;
-                }
-
-                if (temp < 0)
-                {
-                    continue;
-                }
-
-                long diff = result - temp;
-                if (diff < map[temp].RangeLength)
-                {
-                    long dest = map[temp].Destination;
-                    result = dest + diff;
-                }
+                result = seedResult;
             }
-
-            results.Add(result);
         }
 
-        return results.Min();
+        return result;
+    }
+
+    private long GetSeedResult(long seed)
+    {
+        long result = seed;
+        foreach (SortedDictionary<long, (long Destination, long RangeLength)> map in maps)
+        {
+            long temp = -1;
+            foreach (long source in map.Keys)
+            {
+                if (source > result)
+                {
+                    break;
+                }
+
+                temp = source;
+            }
+
+            if (temp < 0)
+            {
+                continue;
+            }
+
+            long diff = result - temp;
+            if (diff < map[temp].RangeLength)
+            {
+                long dest = map[temp].Destination;
+                result = dest + diff;
+            }
+        }
+
+        return result;
     }
 
     private void FillMaps()
@@ -163,7 +172,24 @@ public class Day05 : IDay
 
     public long Run2()
     {
+        IEnumerable<IGrouping<int, long>> seedsSplit =
+            from i in Enumerable.Range(0, seeds.Count)
+            group seeds[i] by i / 2;
 
-        return 2;
+        long result = long.MaxValue;
+        foreach (IGrouping<int, long> seedRange in seedsSplit)
+        {
+            //brute force
+            for (int i = 0; i < seedRange.ElementAt(1); i++)
+            {
+                long seedResult = GetSeedResult(seedRange.ElementAt(0) + i);
+                if (seedResult < result)
+                {
+                    result = seedResult;
+                }
+            }
+        }
+
+        return result;
     }
 }
